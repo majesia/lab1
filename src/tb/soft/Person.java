@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Objects;
 
 
 /*
@@ -80,7 +81,6 @@ class PersonException extends Exception {
  * zawierający stosowny komunikat.
  */
 public class Person {
-	
 	private String firstName;
 	private String lastName;
 	private int birthYear;
@@ -212,5 +212,21 @@ public class Person {
 			throw new PersonException("Wystąpił błąd podczas odczytu danych z pliku.");
 		}	
 	}
-	
+
+	/*@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if(o instanceof Person){
+			Person object =(Person) o;
+			if(firstName.equals(((Person) o).firstName) && lastName.equals(((Person) o).lastName) && birthYear == ((Person) o).birthYear) return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash();
+	}*/
 }  // koniec klasy Person

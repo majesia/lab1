@@ -1,7 +1,8 @@
 package tb.soft;
-
-import java.util.Arrays;
-
+import javax.xml.namespace.QName;
+import java.awt.desktop.SystemEventListener;
+import java.lang.Comparable;
+import java.util.*;
 /**
  * Program: Aplikacja działająca w oknie konsoli, która umożliwia testowanie 
  *          operacji wykonywanych na obiektach klasy Person.
@@ -11,11 +12,26 @@ import java.util.Arrays;
  *    Data: październik 2018 r.
  */
 public class PersonConsoleApp {
+	/*public Set<Person> getHashset_person() {
+		return hashset_person;
+	}
+	public Set<Person> getTreeset_person() {
+		return treeset_person;
+	}
 
+	Set<Person> hashset_person = new HashSet<>();
+	Set<Person> treeset_person = new TreeSet<>();
+	/*List<Person> arraylist_person = new ArrayList<>();
+	List<Person> linkedlist_person = new LinkedList<>();
+	Map<Integer,Person>  hashmap_person = new HashMap<>();
+	Map<Integer, Person> treemap_person = new TreeMap<>();*/
+	public static Collections collections = new Collections();
+	public static int numbers=0;
 	private static final String GREETING_MESSAGE = 
 			"Program Person - wersja konsolowa\n" + 
 	        "Autor: Paweł Rogaliński\n" +
 			"Data:  październik 2018 r.\n";
+
 
 	private static final String MENU = 
 			"    M E N U   G Ł Ó W N E  \n" +
@@ -24,6 +40,9 @@ public class PersonConsoleApp {
 			"3 - Modyfikuj dane osoby   \n" +
 			"4 - Wczytaj dane z pliku   \n" +
 			"5 - Zapisz dane do pliku   \n" +
+			"6 - Porównanie osób \n" +
+
+					"7 - Wypisz wszystkie dane \n" +
 			"0 - Zakończ program        \n";	
 	
 	private static final String CHANGE_MENU = 
@@ -55,8 +74,10 @@ public class PersonConsoleApp {
 	 *  Referencja do obiektu, który zawiera dane aktualnej osoby.
 	 */
 	private Person currentPerson = null;
-	
-	
+
+
+
+
 	/*
 	 *  Metoda runMainLoop wykonuje główną pętlę aplikacji.
 	 *  UWAGA: Ta metoda zawiera nieskończoną pętlę,
@@ -75,6 +96,14 @@ public class PersonConsoleApp {
 				case 1:
 					// utworzenie nowej osoby
 					currentPerson = createNewPerson();
+					if(currentPerson != null){
+						collections.arraylist_person.add((Person) currentPerson);
+						collections.linkedlist_person.add((Person) currentPerson);
+						collections.hashset_person.add((Person) currentPerson);
+						//collections.treeset_person.add(currentPerson);
+						collections.hashmap_person.put((Integer) numbers,(Person) currentPerson);
+						//collections.treemap_person.put((Integer) numbers,(Person) currentPerson);;
+					}
 					break;
 				case 2:
 					// usunięcie danych aktualnej osoby.
@@ -101,6 +130,106 @@ public class PersonConsoleApp {
 				}
 
 					break;
+
+					case 6: {
+						int a, b,c;
+						System.out.println("Podaj numery indeksów osób ktore chcesz porównać:");
+						System.out.println("pierwszy:");
+						Scanner scanner = new Scanner(System.in);
+						a = scanner.nextInt();
+						System.out.println("\ndrugi:");
+						Scanner scannerb = new Scanner(System.in);
+						b = scanner.nextInt();
+						System.out.println("Wybierz którą metodą chcesz porównać obiekty: \n 1 - equals \n 2 - equals zdefiniowaną \n 3 - hashCode \n 4 - hashCode zdefiniowaną");
+						Scanner scannerc = new Scanner(System.in);
+						c = scannerc.nextInt();
+
+						switch(c){
+							case 1 : {
+								System.out.println(collections.linkedlist_person.get(a).equals(collections.linkedlist_person.get(b)));
+								break;
+							}
+							case 2 : {
+								Person person1 = collections.linkedlist_person.get(a);
+								String firstName = person1.getFirstName();
+								String lastName = person1.getLastName();
+								int year = person1.getBirthYear();
+								PersonJob job = person1.getJob();
+								EqualsHashCode person2 = new EqualsHashCode(firstName, lastName);
+								person2.setBirthYear(year);
+								person2.setJob(job);
+
+								Person person3 = collections.linkedlist_person.get(b);
+								String firstName3 = person3.getFirstName();
+								String lastName3 = person3.getLastName();
+								int year3 = person3.getBirthYear();
+								PersonJob job3 = person3.getJob();
+								EqualsHashCode person4 = new EqualsHashCode(firstName3, lastName3);
+								person4.setBirthYear(year3);
+								person4.setJob(job3);
+
+								System.out.println(person2.equals(person4));
+								break;
+							}
+							case 3: {
+								System.out.println(collections.linkedlist_person.get(a).hashCode());
+								break;
+							}
+							case 4: {
+								break;
+							}
+						}
+
+
+						break;
+					}
+					case 7: {
+						System.out.println("Wybierz elementy jakiej kolejkcji chcialbys wyświetlić:");
+						System.out.println( "1 - HashSet\n" +
+											"2 - TreeSet\n" +
+											"3 - ArrayList\n" +
+											"4 - LinkedList\n" +
+											"5 - HashMap\n" +
+											"6 - TreeMap\n");
+						Scanner scanner = new Scanner(System.in);
+						int numberCollection =  scanner.nextInt();
+
+						switch (numberCollection){
+							case 1:{
+								for (Person person1: collections.hashset_person) {
+									System.out.println(person1.getFirstName() + " " +person1.getLastName() +" " +person1.getBirthYear() +" " + person1.getJob());
+								}
+								break;
+							}
+							case 2:{
+								break;
+							}
+							case 3:{
+								for (Person person1: collections.arraylist_person) {
+								System.out.println(person1.getFirstName() + " " +person1.getLastName() +" " +person1.getBirthYear() +" " + person1.getJob());
+							}
+								break;
+							}
+							case 4:{
+								for (Person person1: collections.linkedlist_person) {
+									System.out.println(person1.getFirstName() + " " +person1.getLastName() +" " +person1.getBirthYear() +" " + person1.getJob());
+								}
+								break;
+							}
+							//nwm jak zrobic bo tam trzeba jeszcze kod dostepu
+							/*case 5:{
+								for (Person person1: collections.hashmap_person) {
+									System.out.println(person1.getFirstName() + " " +person1.getLastName() +" " +person1.getBirthYear() +" " + person1.getJob());
+								}
+								break;
+							}*/
+							case 6: {
+								break;
+							}
+						}
+
+					}
+
 				case 0:
 					// zakończenie działania programu
 					UI.printInfoMessage("\nProgram zakończył działanie!");
@@ -165,6 +294,7 @@ public class PersonConsoleApp {
 			person = new Person(first_name, last_name);
 			person.setBirthYear(birth_year);
 			person.setJob(job_name);
+			numbers ++;
 		} catch (PersonException e) {    
 			// Tu są wychwytywane wyjątki zgłaszane przez metody klasy Person,
 			// gdy nie są spełnione ograniczenia nałożone na dopuszczalne wartości
@@ -173,6 +303,9 @@ public class PersonConsoleApp {
 			UI.printErrorMessage(e.getMessage());
 			return null;
 		}
+
+
+
 		return person;
 	}
 	
