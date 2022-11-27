@@ -108,6 +108,12 @@ public class PersonConsoleApp {
 					break;
 				case 2:
 					// usunięcie danych aktualnej osoby.
+					collections.arraylist_person.remove((Person) currentPerson);
+					collections.linkedlist_person.remove((Person) currentPerson);
+					collections.hashset_person.remove((Person) currentPerson);
+					collections.treeset_person.remove((Person)currentPerson);
+					collections.hashmap_person.remove((Integer) numbers,(Person) currentPerson);
+					collections.treemap_person.remove((Integer) numbers,(Person) currentPerson);;
 					currentPerson = null;
 					UI.printInfoMessage("Dane aktualnej osoby zostały usunięte");
 					break;
