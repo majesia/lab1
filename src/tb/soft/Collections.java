@@ -10,5 +10,4 @@ public class Collections {
     Map<Integer,Person>  hashmap_person = new HashMap<>();
     Map<Integer, Person> treemap_person = new TreeMap<>();
 
-
 }
