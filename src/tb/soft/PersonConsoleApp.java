@@ -21,8 +21,8 @@ public class PersonConsoleApp {
 	private static final String MENU = 
 			"    M E N U   G Ł Ó W N E  \n" +
 			"1 - Podaj dane nowej osoby \n" +
-			"2 - Usuń dane osoby        \n" +
-			"3 - Modyfikuj dane osoby   \n" +
+			"2 - Usuń dane aktualnej osoby        \n" +
+			"3 - Modyfikuj dane aktualnej osoby   \n" +
 			"4 - Wczytaj dane z pliku   \n" +
 			"5 - Zapisz dane do pliku   \n" +
 			"6 - Porównanie osób \n" +
@@ -89,8 +89,8 @@ public class PersonConsoleApp {
 					Collections.linkedListPerson.remove(currentPerson);
 					Collections.hashSetPerson.remove(currentPerson);
 					Collections.treeSetPerson.remove(currentPerson);
-					Collections.hashMapPerson.remove(numbers, currentPerson);
-					Collections.treeMapPerson.remove( numbers, currentPerson);
+					Collections.hashMapPerson.remove(Collections.numbers);
+					Collections.treeMapPerson.remove(Collections.numbers);
 					currentPerson = null;
 					UI.printInfoMessage("Dane aktualnej osoby zostały usunięte");
 					break;
@@ -123,11 +123,11 @@ public class PersonConsoleApp {
 
 					switch(c){
 						case 1 : {
-							UI.printMessage("Porównanie osoby pierwszej i drugiej:\n "+ Collections.linkedListPerson.get(a).equals(Collections.linkedListPerson.get(b)));
+							UI.printMessage("Porównanie osoby pierwszej i drugiej:\n "+ Collections.arrayListPerson.get(a).equals(Collections.arrayListPerson.get(b)));
 							break;
 						}
 						case 2 : {
-							Person person1 = Collections.linkedListPerson.get(a);
+							Person person1 = Collections.arrayListPerson.get(a-1);
 							String firstName = person1.getFirstName();
 							String lastName = person1.getLastName();
 							int year = person1.getBirthYear();
@@ -136,7 +136,7 @@ public class PersonConsoleApp {
 							person2.setBirthYear(year);
 							person2.setJob(job);
 
-							Person person3 = Collections.linkedListPerson.get(b);
+							Person person3 = Collections.arrayListPerson.get(b-1);
 							String firstName3 = person3.getFirstName();
 							String lastName3 = person3.getLastName();
 							int year3 = person3.getBirthYear();
@@ -150,13 +150,13 @@ public class PersonConsoleApp {
 						}
 						case 3: {
 							boolean yesOrNo;
-							if(Collections.linkedListPerson.get(a).hashCode()==Collections.linkedListPerson.get(b).hashCode()) yesOrNo=true;
+							if(Collections.arrayListPerson.get(a-1).hashCode()==Collections.arrayListPerson.get(b-1).hashCode()) yesOrNo=true;
 							else yesOrNo =false;
 							UI.printMessage("Porównanie osoby pierwszej i drugiej:\n "+ yesOrNo);
 							break;
 						}
 						case 4: {
-							Person person1 = Collections.linkedListPerson.get(a);
+							Person person1 = Collections.arrayListPerson.get(a-1);
 							String firstName = person1.getFirstName();
 							String lastName = person1.getLastName();
 							int year = person1.getBirthYear();
@@ -165,7 +165,7 @@ public class PersonConsoleApp {
 							person2.setBirthYear(year);
 							person2.setJob(job);
 
-							Person person3 = Collections.linkedListPerson.get(b);
+							Person person3 = Collections.arrayListPerson.get(b-1);
 							String firstName3 = person3.getFirstName();
 							String lastName3 = person3.getLastName();
 							int year3 = person3.getBirthYear();
@@ -207,13 +207,18 @@ public class PersonConsoleApp {
 							//for (int i=0; i< Collections.treeSetPerson.size(); i++){
 								//UI.printMessage(Collections.treeSetPerson[i].get)
 							//}
-							//for (Person person:
-								 //) {
+							for (Person person1: Collections.treeSetPerson){
 
 							//}
-								//UI.printMessage(person1.getFirstName() + " " + person1.getLastName());
-							//}
+								UI.printMessage(person1.getFirstName() + " " + person1.getLastName());
+							}
+							/*Collections.treeSetPerson.add(new Person("W","M"));
+							Collections.treeSetPerson.add(new Person("j","M"));
+							Collections.treeSetPerson.add(new Person("W","M"));
+
 							UI.printMessage("Liczba elementow:"  +(Collections.treeSetPerson.size()));
+							System.out.println("WYPISYWANIE KOLEKCJI:");
+							Collections.treeSetPerson.forEach(System.out::println);*/
 							break;
 						}
 						case 3:{
@@ -228,7 +233,7 @@ public class PersonConsoleApp {
 							}
 							break;
 						}
-							//nwm jak zrobic bo tam trzeba jeszcze kod dostepu
+
 						case 5:{
 							for (int i = 0; i< Collections.treeMapPerson.size(); i++) {
 								UI.printMessage(Collections.treeMapPerson.get(i+1).getFirstName() + " " + Collections.treeMapPerson.get(i+1).getLastName()

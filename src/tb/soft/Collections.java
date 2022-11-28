@@ -17,8 +17,8 @@ public class Collections {
             numbers++;
             arrayListPerson.add(currentPerson);
             linkedListPerson.add(currentPerson);
-            hashSetPerson.add(currentPerson);
             treeSetPerson.add(currentPerson);
+            hashSetPerson.add(currentPerson);
             hashMapPerson.put(numbers,currentPerson);
             treeMapPerson.put(numbers,currentPerson);
 
