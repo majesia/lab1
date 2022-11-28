@@ -4,8 +4,9 @@ import javax.swing.*;
 
 public class JOptionUserDialog extends ConsoleUserDialog{
     @Override
-    public void printMessage(String message) {
+    public String printMessage(String message) {
         JOptionPane.showMessageDialog(null, message, "Message", JOptionPane.PLAIN_MESSAGE);
+        return message;
     }
 
     @Override

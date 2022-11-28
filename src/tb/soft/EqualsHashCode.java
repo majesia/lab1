@@ -1,11 +1,10 @@
 package tb.soft;
 
-import java.util.Objects;
-
 public class EqualsHashCode extends Person{
 
     public EqualsHashCode(String first_name, String last_name) throws PersonException {
         super(first_name, last_name);
+
     }
 
     @Override
@@ -22,6 +21,12 @@ public class EqualsHashCode extends Person{
 
     @Override
     public int hashCode() {
-        return Objects.hash();
+
+        int result;
+        result = getFirstName() != null ? this.getFirstName().hashCode() : 0;
+        result = 31 * result + this.getLastName().hashCode();
+        //result = 31 * result + this.getBirthYear().hashCode();
+
+        return result;
     }
 }

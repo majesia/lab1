@@ -1,36 +1,21 @@
 package tb.soft;
-import javax.xml.namespace.QName;
-import java.awt.desktop.SystemEventListener;
-import java.lang.Comparable;
+
 import java.util.*;
 /**
  * Program: Aplikacja działająca w oknie konsoli, która umożliwia testowanie 
  *          operacji wykonywanych na obiektach klasy Person.
  *    Plik: PersonConsoleApp.java
- *          
  *   Autor: Paweł Rogaliński
  *    Data: październik 2018 r.
  */
 public class PersonConsoleApp {
-	/*public Set<Person> getHashset_person() {
-		return hashset_person;
-	}
-	public Set<Person> getTreeset_person() {
-		return treeset_person;
-	}
-
-	Set<Person> hashset_person = new HashSet<>();
-	Set<Person> treeset_person = new TreeSet<>();
-	/*List<Person> arraylist_person = new ArrayList<>();
-	List<Person> linkedlist_person = new LinkedList<>();
-	Map<Integer,Person>  hashmap_person = new HashMap<>();
-	Map<Integer, Person> treemap_person = new TreeMap<>();*/
 	public static Collections collections = new Collections();
 	public static int numbers=0;
 	private static final String GREETING_MESSAGE = 
 			"Program Person - wersja konsolowa\n" + 
 	        "Autor: Paweł Rogaliński\n" +
-			"Data:  październik 2018 r.\n";
+			"Data:  październik 2018 r.\n"+
+			"Zmiany : Wiktoria Majewska";
 
 
 	private static final String MENU = 
@@ -95,25 +80,17 @@ public class PersonConsoleApp {
 				case 1:
 					// utworzenie nowej osoby
 					currentPerson = createNewPerson();
-					//dodawanie nowej osoby do kazdej kolekcji
-					if(currentPerson != null){
-						numbers++;
-						collections.arraylist_person.add((Person) currentPerson);
-						collections.linkedlist_person.add((Person) currentPerson);
-						collections.hashset_person.add((Person) currentPerson);
-						collections.treeset_person.add((Person)currentPerson);
-						collections.hashmap_person.put((Integer) numbers,(Person) currentPerson);
-						collections.treemap_person.put((Integer) numbers,(Person) currentPerson);;
-					}
+					Collections.addPeople(currentPerson);
 					break;
 				case 2:
 					// usunięcie danych aktualnej osoby.
-					collections.arraylist_person.remove((Person) currentPerson);
-					collections.linkedlist_person.remove((Person) currentPerson);
-					collections.hashset_person.remove((Person) currentPerson);
-					collections.treeset_person.remove((Person)currentPerson);
-					collections.hashmap_person.remove((Integer) numbers,(Person) currentPerson);
-					collections.treemap_person.remove((Integer) numbers,(Person) currentPerson);;
+
+					Collections.arrayListPerson.remove(currentPerson);
+					Collections.linkedListPerson.remove(currentPerson);
+					Collections.hashSetPerson.remove(currentPerson);
+					Collections.treeSetPerson.remove(currentPerson);
+					Collections.hashMapPerson.remove(numbers, currentPerson);
+					Collections.treeMapPerson.remove( numbers, currentPerson);
 					currentPerson = null;
 					UI.printInfoMessage("Dane aktualnej osoby zostały usunięte");
 					break;
@@ -125,7 +102,7 @@ public class PersonConsoleApp {
 				case 4: {
 					// odczyt danych z pliku tekstowego.
 					String file_name = UI.enterString("Podaj nazwę pliku: ");
-					currentPerson = Person.readFromFile(file_name);
+					currentPerson = Person.readFromFile(file_name, collections);
 					UI.printInfoMessage("Dane aktualnej osoby zostały wczytane z pliku " + file_name);
 				}
 					break;
@@ -139,25 +116,18 @@ public class PersonConsoleApp {
 					break;
 				//porownanie osob
 				case 6: {
-					int a, b,c;
-					System.out.println("Podaj numery indeksów osób ktore chcesz porównać:");
-					System.out.println("pierwszy:");
-					Scanner scanner = new Scanner(System.in);
-					a = scanner.nextInt();
-					System.out.println("\ndrugi:");
-					Scanner scannerb = new Scanner(System.in);
-					b = scanner.nextInt();
-					System.out.println("Wybierz którą metodą chcesz porównać obiekty: \n 1 - equals \n 2 - equals zdefiniowaną \n 3 - hashCode \n 4 - hashCode zdefiniowaną");
-					Scanner scannerc = new Scanner(System.in);
-					c = scannerc.nextInt();
+					UI.printMessage("Podaj numery indeksów osób ktore chcesz porównać:");
+					int a = UI.enterInt("pierwszy:");
+					int b = UI.enterInt("drugi:");
+					int c = UI.enterInt("Wybierz którą metodą chcesz porównać obiekty: \n 1 - equals \n 2 - equals zdefiniowaną \n 3 - hashCode \n 4 - hashCode zdefiniowaną");
 
 					switch(c){
 						case 1 : {
-							System.out.println(collections.linkedlist_person.get(a).equals(collections.linkedlist_person.get(b)));
+							UI.printMessage("Porównanie osoby pierwszej i drugiej:\n "+ Collections.linkedListPerson.get(a).equals(Collections.linkedListPerson.get(b)));
 							break;
 						}
 						case 2 : {
-							Person person1 = collections.linkedlist_person.get(a);
+							Person person1 = Collections.linkedListPerson.get(a);
 							String firstName = person1.getFirstName();
 							String lastName = person1.getLastName();
 							int year = person1.getBirthYear();
@@ -166,7 +136,7 @@ public class PersonConsoleApp {
 							person2.setBirthYear(year);
 							person2.setJob(job);
 
-							Person person3 = collections.linkedlist_person.get(b);
+							Person person3 = Collections.linkedListPerson.get(b);
 							String firstName3 = person3.getFirstName();
 							String lastName3 = person3.getLastName();
 							int year3 = person3.getBirthYear();
@@ -175,14 +145,40 @@ public class PersonConsoleApp {
 							person4.setBirthYear(year3);
 							person4.setJob(job3);
 
-							System.out.println(person2.equals(person4));
+							UI.printMessage("Porównanie osoby pierwszej i drugiej:\n " + person2.equals(person4));
 							break;
 						}
 						case 3: {
-							System.out.println(collections.linkedlist_person.get(a).hashCode());
+							boolean yesOrNo;
+							if(Collections.linkedListPerson.get(a).hashCode()==Collections.linkedListPerson.get(b).hashCode()) yesOrNo=true;
+							else yesOrNo =false;
+							UI.printMessage("Porównanie osoby pierwszej i drugiej:\n "+ yesOrNo);
 							break;
 						}
 						case 4: {
+							Person person1 = Collections.linkedListPerson.get(a);
+							String firstName = person1.getFirstName();
+							String lastName = person1.getLastName();
+							int year = person1.getBirthYear();
+							PersonJob job = person1.getJob();
+							EqualsHashCode person2 = new EqualsHashCode(firstName, lastName);
+							person2.setBirthYear(year);
+							person2.setJob(job);
+
+							Person person3 = Collections.linkedListPerson.get(b);
+							String firstName3 = person3.getFirstName();
+							String lastName3 = person3.getLastName();
+							int year3 = person3.getBirthYear();
+							PersonJob job3 = person3.getJob();
+							EqualsHashCode person4 = new EqualsHashCode(firstName3, lastName3);
+							person4.setBirthYear(year3);
+							person4.setJob(job3);
+
+							boolean yesOrNo=false;
+							if(person2.hashCode() == person4.hashCode()) yesOrNo =true;
+							else yesOrNo =false;
+							UI.printMessage("Porównanie osoby pierwszej i drugiej:\n "+ yesOrNo );
+
 							break;
 						}
 					}
@@ -191,49 +187,60 @@ public class PersonConsoleApp {
 					break;
 				}
 				case 7: {
-					System.out.println("Wybierz elementy jakiej kolejkcji chcialbys wyświetlić:");
-					System.out.println( "1 - HashSet\n" +
+					int numberCollection = UI.enterInt("Wybierz elementy jakiej kolejkcji chcialbys wyświetlić:\n"+
+							"1 - HashSet\n" +
 							"2 - TreeSet\n" +
 							"3 - ArrayList\n" +
 							"4 - LinkedList\n" +
-							"5 - HashMap\n" +
-							"6 - TreeMap\n");
-					Scanner scanner = new Scanner(System.in);
-					int numberCollection =  scanner.nextInt();
+							"5 - TreeMap\n" +
+							"6 - HashMap\n");
 
 					switch (numberCollection){
 						case 1:{
-							for (Person person1: collections.hashset_person) {
-								System.out.println(person1.getFirstName() + " " +person1.getLastName() +" " +person1.getBirthYear() +" " + person1.getJob());
+							for (Person person1: Collections.hashSetPerson) {
+								UI.printMessage(person1.getFirstName() + " " +person1.getLastName() +" " +person1.getBirthYear() +" " + person1.getJob());
 							}
 							break;
 						}
 						case 2:{
+
+							//for (int i=0; i< Collections.treeSetPerson.size(); i++){
+								//UI.printMessage(Collections.treeSetPerson[i].get)
+							//}
+							//for (Person person:
+								 //) {
+
+							//}
+								//UI.printMessage(person1.getFirstName() + " " + person1.getLastName());
+							//}
+							UI.printMessage("Liczba elementow:"  +(Collections.treeSetPerson.size()));
 							break;
 						}
 						case 3:{
-							for (Person person1: collections.arraylist_person) {System.out.println(person1.getFirstName() + " " +person1.getLastName() +" " +person1.getBirthYear() +" " + person1.getJob());
+							for (Person person1: Collections.arrayListPerson) {
+								UI.printMessage(person1.getFirstName() + " " +person1.getLastName() +" " +person1.getBirthYear() +" " + person1.getJob());
 							}
 							break;
 						}
 						case 4:{
-							for (Person person1: collections.linkedlist_person) {
-								System.out.println(person1.getFirstName() + " " +person1.getLastName() +" " +person1.getBirthYear() +" " + person1.getJob());
+							for (Person person1: Collections.linkedListPerson) {
+								UI.printMessage(person1.getFirstName() + " " +person1.getLastName() +" " +person1.getBirthYear() +" " + person1.getJob());
 							}
 							break;
 						}
 							//nwm jak zrobic bo tam trzeba jeszcze kod dostepu
 						case 5:{
-							for (int i=0; i<collections.treemap_person.size();i++) {
-								System.out.println(collections.treemap_person.get(i+1).getFirstName() + " " +collections.treemap_person.get(i+1).getLastName()
-								+ " " + collections.treemap_person.get(i+1).getBirthYear() + " " + collections.treemap_person.get(i+1).getJob());
+							for (int i = 0; i< Collections.treeMapPerson.size(); i++) {
+								UI.printMessage(Collections.treeMapPerson.get(i+1).getFirstName() + " " + Collections.treeMapPerson.get(i+1).getLastName()
+								+ " " + Collections.treeMapPerson.get(i+1).getBirthYear() + " " + Collections.treeMapPerson.get(i+1).getJob());
 							}
+							UI.printMessage("Liczba elementow:"  +(Collections.treeMapPerson.size()));
 							break;
 						}
 						case 6: {
-							for (int i=0; i<collections.hashmap_person.size();i++) {
-								System.out.println(collections.hashmap_person.get(i+1).getFirstName() + " " +collections.hashmap_person.get(i+1).getLastName()
-										+ " " + collections.hashmap_person.get(i+1).getBirthYear() + " " + collections.hashmap_person.get(i+1).getJob());
+							for (int i = 0; i< Collections.hashMapPerson.size(); i++) {
+								UI.printMessage(Collections.hashMapPerson.get(i+1).getFirstName() + " " + Collections.hashMapPerson.get(i+1).getLastName()
+										+ " " + Collections.hashMapPerson.get(i+1).getBirthYear() + " " + Collections.hashMapPerson.get(i+1).getJob());
 							}
 							break;
 						}

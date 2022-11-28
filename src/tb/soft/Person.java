@@ -80,7 +80,7 @@ class PersonException extends Exception {
  * niedozwolonej wartości, któremuś z atrybutów jest zgłaszany wyjątek
  * zawierający stosowny komunikat.
  */
-public class Person implements Comparable<Person>{
+public class Person implements Comparable<Person> {
 	private String firstName;
 	private String lastName;
 	private int birthYear;
@@ -189,23 +189,35 @@ public class Person implements Comparable<Person>{
 	}
 	
 	
-	public static Person readFromFile(BufferedReader reader) throws PersonException{
+	public static Person readFromFile(BufferedReader reader, Collections collections) throws PersonException{
 		try {
+			int count =0;
 			String line = reader.readLine();
-			String[] txt = line.split("#");
-			Person person = new Person(txt[0], txt[1]);
-			person.setBirthYear(txt[2]);
-			person.setJob(txt[3]);	
-			return person;
+			Person lastPerson = null;
+			while (line != null) {
+
+				count++;
+				String[] txt = line.split(" ");
+				Person person = new Person(txt[0], txt[1]);
+				person.setBirthYear(txt[2]);
+				person.setJob(txt[3]);
+				collections.addPeople(person);
+				lastPerson = person;
+
+
+				line=reader.readLine();
+			}
+			return lastPerson;
+
 		} catch(IOException e){
 			throw new PersonException("Wystąpił błąd podczas odczytu danych z pliku.");
 		}	
 	}
 	
 	
-	public static Person readFromFile(String file_name) throws PersonException {
+	public static Person readFromFile(String file_name, Collections collections) throws PersonException {
 		try (BufferedReader reader = new BufferedReader(new FileReader(new File(file_name)))) {
-			return Person.readFromFile(reader);
+			return Person.readFromFile(reader, collections);
 		} catch (FileNotFoundException e){
 			throw new PersonException("Nie odnaleziono pliku " + file_name);
 		} catch(IOException e){
@@ -218,20 +230,4 @@ public class Person implements Comparable<Person>{
 		return 0;
 	}
 
-	/*@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if(o instanceof Person){
-			Person object =(Person) o;
-			if(firstName.equals(((Person) o).firstName) && lastName.equals(((Person) o).lastName) && birthYear == ((Person) o).birthYear) return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash();
-	}*/
 }  // koniec klasy Person

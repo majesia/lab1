@@ -26,8 +26,9 @@ public class ConsoleUserDialog {
 	   private final Scanner sc = new Scanner(System.in);
 
 	   
-		public void printMessage(String message) {
+		public String printMessage(String message) {
 			System.out.println(message);
+			return message;
 		}
 		
 		
