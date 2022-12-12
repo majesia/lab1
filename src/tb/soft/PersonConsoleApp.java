@@ -80,15 +80,14 @@ public class PersonConsoleApp {
 				case 1:
 					// utworzenie nowej osoby
 					currentPerson = createNewPerson();
-					Collections.addPeople(currentPerson);
+					collections.addPeople(currentPerson);
 					break;
 				case 2:
 					// usunięcie danych aktualnej osoby.
-
 					Collections.arrayListPerson.remove(currentPerson);
 					Collections.linkedListPerson.remove(currentPerson);
 					Collections.hashSetPerson.remove(currentPerson);
-					Collections.treeSetPerson.remove(currentPerson);
+					System.out.println(Collections.treeSetPerson.remove(currentPerson));
 					Collections.hashMapPerson.remove(Collections.numbers);
 					Collections.treeMapPerson.remove(Collections.numbers);
 					currentPerson = null;
@@ -107,10 +106,12 @@ public class PersonConsoleApp {
 				}
 					break;
 				case 5: {
-					// zapis danych aktualnej osoby do pliku tekstowego 
+					// zapis danych  do pliku tekstowego
 					String file_name = UI.enterString("Podaj nazwę pliku: ");
-					Person.printToFile(file_name, currentPerson);
-					UI.printInfoMessage("Dane aktualnej osoby zostały zapisane do pliku " + file_name);
+					Person.printToFile(file_name, (ArrayList<Person>) Collections.arrayListPerson);
+
+
+					UI.printInfoMessage("Dane zostały zapisane do pliku " + file_name);
 				}
 
 					break;
@@ -207,18 +208,28 @@ public class PersonConsoleApp {
 							//for (int i=0; i< Collections.treeSetPerson.size(); i++){
 								//UI.printMessage(Collections.treeSetPerson[i].get)
 							//}
-							for (Person person1: Collections.treeSetPerson){
+							/*for (Person person1: Collections.treeSetPerson){
 
 							//}
-								UI.printMessage(person1.getFirstName() + " " + person1.getLastName());
-							}
-							/*Collections.treeSetPerson.add(new Person("W","M"));
+								UI.printMessage(person1.getFirstName() + " " + person1.getLastName()+" " +person1.getBirthYear() +" " + person1.getJob());
+							}*/
+
+							/*Collections.treeSetPerson.addAll(Collections.arrayListPerson);
 							Collections.treeSetPerson.add(new Person("j","M"));
 							Collections.treeSetPerson.add(new Person("W","M"));
+							System.out.println(Collections.treeSetPerson.size());
 
 							UI.printMessage("Liczba elementow:"  +(Collections.treeSetPerson.size()));
 							System.out.println("WYPISYWANIE KOLEKCJI:");
 							Collections.treeSetPerson.forEach(System.out::println);*/
+							//Set<Person> personTreeSet = new TreeSet<>();
+							//personTreeSet = new TreeSet<>(Arrays.asList(collections.arrayListPerson));
+
+							for (Person person1: Collections.treeSetPerson){
+
+								//}
+								UI.printMessage(person1.getFirstName() + " " + person1.getLastName()+" " +person1.getBirthYear() +" " + person1.getJob());
+							}
 							break;
 						}
 						case 3:{

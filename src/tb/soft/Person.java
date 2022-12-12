@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -174,15 +175,18 @@ public class Person implements Comparable<Person> {
 	}
 	
 	
-	public static void printToFile(PrintWriter writer, Person person){
-		writer.println(person.firstName + "#" + person.lastName + 
-				"#" + person.birthYear + "#" + person.job);
+	public static void printToFile(PrintWriter writer, ArrayList<Person> personList){
+		for (Person person:personList) {
+			writer.println(person.firstName + " " + person.lastName +
+					" " + person.birthYear + " " + person.job);
+		}
+
 	}
 	
 	
-	public static void printToFile(String file_name, Person person) throws PersonException {
+	public static void printToFile(String file_name, ArrayList<Person> personList) throws PersonException {
 		try (PrintWriter writer = new PrintWriter(file_name)) {
-			printToFile(writer, person);
+			printToFile(writer, personList);
 		} catch (FileNotFoundException e){
 			throw new PersonException("Nie odnaleziono pliku " + file_name);
 		}
